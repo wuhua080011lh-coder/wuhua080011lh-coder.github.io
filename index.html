@@ -98,12 +98,12 @@ button { font-family: inherit; cursor: pointer; }
 
 /* ── 分类筛选栏 ───────────────────────── */
 .tabs { position: sticky; top: 58px; z-index: 90; background: var(--header-bg); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); margin-top: 24px; }
-.tabs-inner { max-width: 1080px; margin: 0 auto; padding: 10px 20px; display: flex; align-items: center; gap: 8px; overflow-x: auto; scrollbar-width: none; }
+.tabs-inner { max-width: 1080px; margin: 0 auto; padding: 10px 20px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; row-gap: 8px; overflow-x: auto; scrollbar-width: none; }
 .tabs-inner::-webkit-scrollbar { display: none; }
-.tab { border: 1px solid var(--border); background: var(--card); color: var(--text-2); font-size: 13.5px; padding: 6px 15px; border-radius: 999px; white-space: nowrap; transition: all 0.2s; }
+.tab { border: 1px solid var(--border); background: var(--card); color: var(--text-2); font-size: clamp(12px, 3.2vw, 13.5px); padding: 6px clamp(11px, 2.6vw, 15px); border-radius: 999px; white-space: nowrap; transition: all 0.2s; }
 .tab:hover { color: var(--accent); border-color: var(--accent); }
 .tab.active { background: var(--accent); border-color: var(--accent); color: #fff; }
-.tab-search { margin-left: auto; display: flex; align-items: center; gap: 6px; border: 1px solid var(--border); background: var(--card); border-radius: 999px; padding: 5px 13px; min-width: 170px; flex-shrink: 0; }
+.tab-search { margin-left: auto; display: flex; align-items: center; gap: 6px; border: 1px solid var(--border); background: var(--card); border-radius: 999px; padding: 5px 13px; flex: 1 1 150px; min-width: 140px; max-width: 240px; }
 .sort-toggle { display: flex; border: 1px solid var(--border); border-radius: 999px; overflow: hidden; flex-shrink: 0; background: var(--card); }
 .sort-btn { border: none; background: transparent; color: var(--text-2); font-size: 12.5px; padding: 6px 13px; transition: all 0.2s; white-space: nowrap; }
 .sort-btn + .sort-btn { border-left: 1px solid var(--border); }
@@ -225,6 +225,7 @@ button { font-family: inherit; cursor: pointer; }
 }
 @media (max-width: 768px) {
   body { padding-bottom: 64px; }
+  #feed, #topics, #contact, #hot { scroll-margin-top: 158px; }
   .bottomnav { display: block; }
   .backtop { bottom: 80px; }
   .profile-card { padding: 24px 20px; }
@@ -299,11 +300,11 @@ button { font-family: inherit; cursor: pointer; }
   <div class="tabs">
     <div class="tabs-inner" role="tablist" aria-label="动态分类筛选">
       <button class="tab active" data-cat="all">全部</button>
-      <button class="tab" data-cat="featured">精选</button>
       <button class="tab" data-cat="project">项目</button>
-      <button class="tab" data-cat="decision">裁决</button>
-      <button class="tab" data-cat="learning">学习</button>
-      <button class="tab" data-cat="review">复盘</button>
+      <button class="tab" data-cat="hobby">爱好</button>
+      <button class="tab" data-cat="goal">目标</button>
+      <button class="tab" data-cat="sport">运动</button>
+      <button class="tab" data-cat="knowledge">知识库</button>
       <div class="sort-toggle" role="group" aria-label="时间线排序">
         <button class="sort-btn active" data-sort="new">最新在前</button>
         <button class="sort-btn" data-sort="old">最早在前</button>
@@ -318,15 +319,15 @@ button { font-family: inherit; cursor: pointer; }
 
       <div class="group" data-group>
         <h2 class="group-title">今天 · 10月7日 周三 <span class="count">· 2 条</span></h2>
-        <article class="card reveal" data-cat="daily" data-featured="1">
-          <div class="card-meta"><span class="time">09:41</span><span class="src-badge">一手发布</span><span class="cat-chip">日常</span><span class="featured-badge">精选</span><span class="score" title="含金量自评（0-100）">96</span></div>
+        <article class="card reveal" data-cat="project" data-featured="1">
+          <div class="card-meta"><span class="time">09:41</span><span class="src-badge">一手发布</span><span class="cat-chip">项目</span><span class="featured-badge">精选</span><span class="score" title="含金量自评（0-100）">96</span></div>
           <h3>个人官网 3.0 上线：把自我介绍做成资讯聚合站</h3>
           <p class="sum">参考 AIHOT 的信息流范式重构个人主页：日期分组动态流、个人热点榜、含金量评分与推荐理由。你现在看到的这一条，就发布在新站上。</p>
           <p class="corrob">另有 <b>2</b> 个佐证 · Git 提交记录 / 设计对话存档</p>
           <div class="card-why"><b>推荐理由</b>一个人的成长也值得被"聚合"——用产品的语言介绍自己，本身就是一件作品。</div>
         </article>
-        <article class="card reveal" data-cat="daily">
-          <div class="card-meta"><span class="time">08:20</span><span class="src-badge">一手发布</span><span class="cat-chip">日常</span><span class="score" title="含金量自评（0-100）">88</span></div>
+        <article class="card reveal" data-cat="project">
+          <div class="card-meta"><span class="time">08:20</span><span class="src-badge">一手发布</span><span class="cat-chip">项目</span><span class="score" title="含金量自评（0-100）">88</span></div>
           <h3>打通飞书 Agent 闭环</h3>
           <p class="sum">头像与个人资料经飞书 OpenAPI 自动拉取同步到本站，个人数据源与官网首次实现自动流转。</p>
           <p class="corrob">另有 <b>1</b> 个佐证 · lark-cli 授权记录</p>
@@ -343,14 +344,14 @@ button { font-family: inherit; cursor: pointer; }
           <p class="corrob">另有 <b>3</b> 个佐证 · 源码仓库 / 技术文档 / 学习总结</p>
           <div class="card-why"><b>推荐理由</b>从"看教程"到"交付完整系统"的分水岭，踩过的每个坑都沉淀成了文档。</div>
         </article>
-        <article class="card reveal" data-cat="review">
-          <div class="card-meta"><span class="time">09·09</span><span class="src-badge">复盘日记</span><span class="cat-chip">复盘</span><span class="score" title="含金量自评（0-100）">85</span></div>
+        <article class="card reveal" data-cat="knowledge">
+          <div class="card-meta"><span class="time">09·09</span><span class="src-badge">复盘日记</span><span class="cat-chip">知识库</span><span class="score" title="含金量自评（0-100）">85</span></div>
           <h3>深度反思：不能站着把钱赚了</h3>
           <p class="sum">扫楼、地推、直播露脸不是屈辱，是能力不足。在大学阶段把脸皮丢掉，练出销售的肌肉。</p>
           <div class="card-why"><b>推荐理由</b>敢于公开自己的难看反思，比展示漂亮战绩更有信息量。</div>
         </article>
-        <article class="card reveal" data-cat="decision">
-          <div class="card-meta"><span class="time">09·01</span><span class="src-badge">决策存档</span><span class="cat-chip">裁决</span><span class="score" title="含金量自评（0-100）">90</span></div>
+        <article class="card reveal" data-cat="goal">
+          <div class="card-meta"><span class="time">09·01</span><span class="src-badge">决策存档</span><span class="cat-chip">目标</span><span class="score" title="含金量自评（0-100）">90</span></div>
           <h3>4 周 AI 交付冲刺启动</h3>
           <p class="sum">28 天强制实验：砍掉所有学习借口，从「自用型技能」推向「端到端变现闭环」，每周红队自检三问。目标：跑出第一笔真实付费。</p>
           <div class="card-why"><b>推荐理由</b>确定性只能从行动中产生——先交付，再优化。</div>
@@ -359,8 +360,8 @@ button { font-family: inherit; cursor: pointer; }
 
       <div class="group" data-group>
         <h2 class="group-title">2026年8月 <span class="count">· 1 条</span></h2>
-        <article class="card reveal" data-cat="decision" data-featured="1">
-          <div class="card-meta"><span class="time">08·15</span><span class="src-badge">决策存档</span><span class="cat-chip">裁决</span><span class="featured-badge">精选</span><span class="score" title="含金量自评（0-100）">93</span></div>
+        <article class="card reveal" data-cat="goal" data-featured="1">
+          <div class="card-meta"><span class="time">08·15</span><span class="src-badge">决策存档</span><span class="cat-chip">目标</span><span class="featured-badge">精选</span><span class="score" title="含金量自评（0-100）">93</span></div>
           <h3>两轮裁决：锁定 AI 电商第一主线</h3>
           <p class="sum">完成 7 项关键裁决，确立 M0–M4 里程碑；零食店降级为最低现金流保障。AI 虚拟产品零库存、零物流、边际成本趋零。</p>
           <p class="corrob">另有 <b>2</b> 个佐证 · 裁决文档 / 里程碑看板</p>
@@ -370,8 +371,8 @@ button { font-family: inherit; cursor: pointer; }
 
       <div class="group" data-group>
         <h2 class="group-title">2026年7月 <span class="count">· 1 条</span></h2>
-        <article class="card reveal" data-cat="learning">
-          <div class="card-meta"><span class="time">07·10</span><span class="src-badge">知识库</span><span class="cat-chip">学习</span><span class="score" title="含金量自评（0-100）">87</span></div>
+        <article class="card reveal" data-cat="knowledge">
+          <div class="card-meta"><span class="time">07·10</span><span class="src-badge">知识库</span><span class="cat-chip">知识库</span><span class="score" title="含金量自评（0-100）">87</span></div>
           <h3>知识操作系统上线</h3>
           <p class="sum">Obsidian 知识库：17 篇源文章 → 21 实体 + 22 概念 + 5 合成，50+ Wiki 页面。飞书每日反馈 → AI 读取 → 回写 journal 的数据闭环。</p>
           <p class="corrob">另有 <b>2</b> 个佐证 · Wiki 页面 / 飞书多维表格</p>
@@ -392,8 +393,8 @@ button { font-family: inherit; cursor: pointer; }
 
       <div class="group" data-group>
         <h2 class="group-title">2026年5月 <span class="count">· 1 条</span></h2>
-        <article class="card reveal" data-cat="decision">
-          <div class="card-meta"><span class="time">05·01</span><span class="src-badge">决策存档</span><span class="cat-chip">裁决</span><span class="score" title="含金量自评（0-100）">89</span></div>
+        <article class="card reveal" data-cat="goal">
+          <div class="card-meta"><span class="time">05·01</span><span class="src-badge">决策存档</span><span class="cat-chip">目标</span><span class="score" title="含金量自评（0-100）">89</span></div>
           <h3>战略转向：梭哈 AI</h3>
           <p class="sum">意识到 AI 正在重塑一切，做出关键决策——削减游戏和短视频，全面转向 AI 学习与商业实践。</p>
           <div class="card-why"><b>推荐理由</b>所有后续故事的时间原点。</div>
