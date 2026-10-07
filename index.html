@@ -580,11 +580,15 @@ button { font-family: inherit; cursor: pointer; }
   var searchInput = document.getElementById('searchInput');
   var state = { cat: 'all', q: '' };
 
+  /* 分类层级：父类 = 子类的并集（点「爱好」显示番剧/绘画/书籍/电影全部内容） */
+  var CAT_CHILDREN = { hobby: ['anime', 'paint', 'book', 'movie'] };
+
   function applyFilter() {
     var visible = 0;
     cards.forEach(function (card) {
-      var okCat = state.cat === 'all' ||
-                  (state.cat === 'featured' ? card.hasAttribute('data-featured') : card.getAttribute('data-cat') === state.cat);
+      var cat = card.getAttribute('data-cat');
+      var kids = CAT_CHILDREN[state.cat];
+      var okCat = state.cat === 'all' || cat === state.cat || (kids ? kids.indexOf(cat) !== -1 : false);
       var okQ = !state.q || card.textContent.toLowerCase().indexOf(state.q) !== -1;
       var show = okCat && okQ;
       card.style.display = show ? '' : 'none';
