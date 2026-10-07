@@ -260,7 +260,7 @@ button { font-family: inherit; cursor: pointer; }
       <a href="#topics">专题</a>
       <a href="#contact">联系</a>
     </nav>
-    <a class="topbar-douyin" href="https://www.douyin.com/user/4252524313052396" target="_blank" rel="noopener" title="抖音 · 小梦学长">🎵 抖音</a>
+    <a class="topbar-douyin" data-douyin href="https://www.douyin.com/user/MS4wLjABAAAACaR08vuOa870HnmMksHWmcIvVrXqoE-eGTvyzzhF9VIkxA0t9FUFF7ezalX5WtHg" target="_blank" rel="noopener" title="抖音 · 小梦学长">🎵 抖音</a>
     <button class="theme-btn" id="themeBtn" aria-label="切换深浅色主题">🌙</button>
   </div>
 </header>
@@ -496,7 +496,7 @@ button { font-family: inherit; cursor: pointer; }
     <h2>一起聊聊</h2>
     <p>无论是 AI 创业、校园经济、还是知识管理——我都在路上，欢迎同行。</p>
     <div class="contact-links">
-      <a class="contact-link" href="https://www.douyin.com/user/4252524313052396" target="_blank" rel="noopener"><span>🎵</span>抖音 · 小梦学长</a>
+      <a class="contact-link" data-douyin href="https://www.douyin.com/user/MS4wLjABAAAACaR08vuOa870HnmMksHWmcIvVrXqoE-eGTvyzzhF9VIkxA0t9FUFF7ezalX5WtHg" target="_blank" rel="noopener"><span>🎵</span>抖音 · 小梦学长</a>
       <span class="contact-link" onclick="alert('微信号待补充：编辑本页 contact-links 区域即可')"><span>💬</span>微信</span>
       <span class="contact-link" onclick="alert('邮箱待补充：编辑本页 contact-links 区域即可')"><span>📧</span>邮箱</span>
       <span class="contact-link" onclick="alert('GitHub 地址待补充：编辑本页 contact-links 区域即可')"><span>⚡</span>GitHub</span>
@@ -633,6 +633,25 @@ button { font-family: inherit; cursor: pointer; }
   }, { passive: true });
   backtop.addEventListener('click', function () {
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  /* 抖音深链：移动端先唤起抖音 App，失败 1.5s 后回退网页版；
+     页面被切走（App 已接管）立即取消回退，防双跳。桌面端保持默认新开网页。 */
+  var dyWeb = 'https://www.douyin.com/user/MS4wLjABAAAACaR08vuOa870HnmMksHWmcIvVrXqoE-eGTvyzzhF9VIkxA0t9FUFF7ezalX5WtHg';
+  var dyApp = 'snssdk1128://user/profile/4252524313052396';
+  document.querySelectorAll('a[data-douyin]').forEach(function (a) {
+    a.addEventListener('click', function (e) {
+      if (!/Android|iPhone|iPad|Mobi/i.test(navigator.userAgent)) return;
+      e.preventDefault();
+      var cancelled = false;
+      var timer = setTimeout(function () {
+        if (!cancelled) window.location.href = dyWeb;
+      }, 1500);
+      document.addEventListener('visibilitychange', function onVis() {
+        if (document.hidden) { cancelled = true; clearTimeout(timer); document.removeEventListener('visibilitychange', onVis); }
+      });
+      window.location.href = dyApp;
+    });
   });
   } catch (e) {
     /* 兜底：脚本任何环节出错时直接显示全部内容，不留空白页 */
